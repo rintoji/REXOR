@@ -28,7 +28,7 @@ Rather than relying on a single AI agent, REXOR uses two complementary perspecti
 REXOR/
 ├── README.md
 ├── .gitignore
-└── Rexor/
+└── app/
     └── src/
         └── Main.java
 ```
