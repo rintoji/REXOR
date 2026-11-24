@@ -1,5 +1,4 @@
 # REXOR
-A dual-agent AI system for collaborative research, critique, and content refinement.
 ### Two Minds. One Better Result.
 
 REXOR is a dual-agent AI system where two specialized agents collaborate to research, critique, and refine content through an iterative feedback loop.
@@ -7,9 +6,15 @@ REXOR is a dual-agent AI system where two specialized agents collaborate to rese
 ## How It Works
 
 1. **Researcher Agent** — Investigates the user's request and produces an initial result.
-2. **Reviewer Agent** — Evaluates the research, identifies weaknesses, and provides constructive feedback.
-3. **Refinement** — The Researcher improves its work based on the review.
-4. **Final Result** — Delivers the refined content after the configured review rounds.
+2. **Reviewer Agent** — Evaluates the research, identifies weaknesses, assigns a score, and decides whether to approve or reject it.
+3. **Refinement** — If rejected, the Researcher improves its work based on the reviewer's feedback.
+4. **Final Result** — The system delivers the approved content or handles the configured review-round limit.
+
+## Review Process
+
+- Users can configure the maximum number of review rounds.
+- The Reviewer assigns a score and an approval/rejection decision to each submission.
+- The Researcher uses feedback to improve rejected submissions.
 
 ## Core Concept
 
@@ -21,13 +26,11 @@ Rather than relying on a single AI agent, REXOR uses two complementary perspecti
 
 ```text
 REXOR/
+├── README.md
+├── .gitignore
 └── Rexor/
     └── src/
         └── Main.java
-└──README.md
-└──LICENSE
-└──.gitignore
-
 ```
 
 ## Tech Stack
