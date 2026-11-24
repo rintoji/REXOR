@@ -24,6 +24,10 @@ REXOR/
 └── Rexor/
     └── src/
         └── Main.java
+└──README.md
+└──LICENSE
+└──.gitignore
+
 ```
 
 ## Tech Stack
