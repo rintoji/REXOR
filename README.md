@@ -1,7 +1,7 @@
 
 <div align="center">
 
-<img src="docs/REXOR_gray.png" alt="REXOR Logo" width="280">
+<img src="docs/REXOR_DarkGray.png" alt="REXOR Logo" width="280">
 
 # REXOR
 ### Two Minds. One Better Result.
