@@ -1,13 +1,7 @@
 
-<div align="right">
-  <a href="https://github.com/rintoji/REXOR">
-    <img src="docs/github-corner-cutout.svg" width="80" alt="View source on GitHub">
-  </a>
-</div>
-
 <div align="center">
 
-<img src="docs/Rexor.png" alt="REXOR Logo" width="280">
+<img src="docs/REXOR.png" alt="REXOR Logo" width="280">
 
 # REXOR
 ### Two Minds. One Better Result.
