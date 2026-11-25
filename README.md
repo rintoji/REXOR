@@ -8,10 +8,7 @@
 
 </div>
 
-# REXOR
-### Two Minds. One Better Result.
 
-REXOR is a dual-agent AI system where two specialized agents collaborate to research, critique, and refine content through an iterative feedback loop.
 
 ## How It Works
 
