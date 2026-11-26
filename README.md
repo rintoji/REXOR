@@ -39,15 +39,10 @@ REXOR/
     └── src/
         └── Main.java
 ```
-
 ## Architecture Overview
-
-`Main` initializes and triggers `CollaborationManager`. `CollaborationManager` owns `ResearcherAgent` and `ReviewerAgent` (composition), both of which extend `Agent` (inheritance) and rely on `AIService` (association) to generate outputs.
 
 ```mermaid
 classDiagram
-    direction TB
-
     class Main {
         +main(String[] args)
     }
@@ -79,25 +74,13 @@ classDiagram
         +generateResponse(String prompt) String
     }
 
-    Main --> CollaborationManager : starts workflow
-
-    CollaborationManager *-- ResearcherAgent : owns
-    CollaborationManager *-- ReviewerAgent : owns
-    CollaborationManager ..> AIService : indirect via agents
-
-    ResearcherAgent --|> Agent : extends
-    ReviewerAgent --|> Agent : extends
-
-    Agent --> AIService : uses
-    ResearcherAgent --> AIService : inherits service
-    ReviewerAgent --> AIService : inherits service
+    Main --> CollaborationManager
+    CollaborationManager *-- ResearcherAgent
+    CollaborationManager *-- ReviewerAgent
+    ResearcherAgent --|> Agent
+    ReviewerAgent --|> Agent
+    Agent --> AIService
 ```
-
-### Connection Flow
-* **`Main` → `CollaborationManager`:** Entry point creates and runs the collaboration loop.
-* **`CollaborationManager` *-- `ResearcherAgent` & `ReviewerAgent`:** Manager composes both worker agents to run research and review rounds.
-* **`ResearcherAgent` & `ReviewerAgent` --|> `Agent`:** Both specialized agents inherit shared state (`service`, `agentDuty`) from the abstract `Agent` base class.
-* **`Agent` → `AIService`:** Base class delegates model calls to `AIService`, which `ResearcherAgent` and `ReviewerAgent` use through inheritance.
 ## Tech Stack
 
 - Java
