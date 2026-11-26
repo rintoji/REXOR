@@ -40,6 +40,52 @@ REXOR/
         └── Main.java
 ```
 
+## Architecture Overview
+
+This project models a multi-agent workflow (`ResearcherAgent` and `ReviewerAgent`) coordinated around a core `Agent` class, an `AI Service` layer, `Collaboration Manager`, a `visuel` (visual) module, and a `Main` entry point.
+
+### System Diagram
+
+```mermaid
+classDiagram
+    class Main
+
+    class Agent {
+        +task
+        +result
+        +researchAi
+        +reviewAi
+        +think() result
+        +update() task
+        +process(int rounds) result
+    }
+
+    class AIService {
+        #AIService aiService
+        #final string duty
+        +Agent()
+    }
+
+    class ResearcherAgent
+    class ReviewerAgent
+    class CollaborationManager
+    class Visual
+
+    ResearcherAgent --> Agent
+    ReviewerAgent --> Agent
+```
+
+### Components Summary
+
+| Component | Role | Key Members / Notes |
+| :--- | :--- | :--- |
+| **`Main`** | Application entry point | Top-level execution flow |
+| **`Agent`** | Core agent abstraction | Fields: `task`, `result`, `researchAi`, `reviewAi`; Methods: `think()`, `update()`, `process(int rounds)` |
+| **`AIService`** | AI service / duty configuration | Protected `AIService` reference, protected final `duty` string, `+Agent()` constructor |
+| **`ResearcherAgent`** | Research-focused agent | Connects to `Agent` |
+| **`ReviewerAgent`** | Review-focused agent | Connects to `Agent` |
+| **`CollaborationManager`** | Coordinates collaboration | Layout/dividers present in source diagram |
+| **`Visual`** (`visuel`) | Visual / UI representation | Standalone card in source diagram |
 ## Tech Stack
 
 - Java
