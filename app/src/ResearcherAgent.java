@@ -4,10 +4,10 @@ public class ResearcherAgent extends Agent{
         super(aiService,"you are a research agent.");
     }
 
-    public String research(String task, String points){
-        if (points != null){
-            return "researching with the points";
-        }
-        else return "researching ";
+    public String research(Task task,Review review){
+        if (!review.approved){
+            return  "researching considering the feedback";
+
+        }else return   "well done";
     }
 }

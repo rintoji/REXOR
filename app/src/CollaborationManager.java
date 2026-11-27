@@ -1,31 +1,30 @@
+
 public class CollaborationManager {
-    public  String task;
-    public  String points;
     public  String result;
+    public Review review = new Review();
     public  ReviewerAgent reviewerAgent = new ReviewerAgent(new AIService("11"));
     public  ResearcherAgent researcherAgent = new ResearcherAgent(new AIService("11"));
 
-     void setTask(String newTask){
-        task = newTask;
+
+     void think(Task task, Review review){
+        result = researcherAgent.research(task,review);
     }
 
-     void think(){
-        result = researcherAgent.research(task,points);
+     void update(Task task, Review review){
+        reviewerAgent.review(task,review,result);
     }
 
-     void update(){
-        points = reviewerAgent.review(task,result);
-    }
-
-     void startProcess(){
+     void startProcess(Task task){
         int index = 0;
         System.out.println("--------");
         while (index <= 3){
-            System.out.println("TASK: " +task);
-            think();
+            System.out.println("TASK: " +task.task);
+            think(task, review);
             System.out.println("RESULT: "+result);
-            update();
-            System.out.println("POINTS: "+ points);
+            update(task, review);
+            if(review.approved){
+                break;
+            }
             System.out.println("--------");
             index++;
         }
