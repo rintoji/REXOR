@@ -46,28 +46,41 @@ classDiagram
     class CollaborationManager {
         -ResearcherAgent researcher
         -ReviewerAgent reviewer
-        +startProcess(String task, int maxRounds) String
+        -int MAX_ROUNDS
+        +startProcess(Task task) String
     }
 
     class Agent {
         <<abstract>>
         #AIService service
-        #String agentDuty
+        #String duty
+        #ask(String prompt) String
     }
 
     class ResearcherAgent {
-        +research(String task, String feedback) String
+        +research(Task task, Review review) String
     }
 
     class ReviewerAgent {
-        +review(String task, String content) String
+        +review(Task task, Review review, String answer) Review
     }
 
     class AIService {
         -HttpClient client
         -String apiKey
-        -String model
-        +generateResponse(String prompt) String
+        -String BASE_URL
+        -String MODEL
+        +generate(String systemPrompt, String userPrompt) String
+    }
+
+    class Task {
+        +String text
+    }
+
+    class Review {
+        +int score
+        +boolean approved
+        +String feedback
     }
 
     Main --> CollaborationManager
@@ -76,6 +89,9 @@ classDiagram
     ResearcherAgent --|> Agent
     ReviewerAgent --|> Agent
     Agent --> AIService
+    CollaborationManager ..> Task
+    ResearcherAgent ..> Review
+    ReviewerAgent ..> Review
 ```
 
 ## Read the code in this order
