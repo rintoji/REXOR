@@ -1,32 +1,35 @@
-
 public class CollaborationManager {
-    public  String result;
-    public Review review = new Review();
-    public  ReviewerAgent reviewerAgent = new ReviewerAgent(new AIService("11"));
-    public  ResearcherAgent researcherAgent = new ResearcherAgent(new AIService("11"));
+    private static final int MAX_ROUNDS = 3;
 
+    private final ResearcherAgent researcher;
+    private final ReviewerAgent reviewer;
 
-     void think(Task task, Review review){
-        result = researcherAgent.research(task,review);
+    public CollaborationManager() {
+        AIService ai = new AIService();
+        this.researcher = new ResearcherAgent(ai);
+        this.reviewer = new ReviewerAgent(ai);
     }
 
-     void update(Task task, Review review){
-        reviewerAgent.review(task,review,result);
-    }
+    /** Research, review, refine — and return the best answer. */
+    public String startProcess(Task task) {
+        Review review = new Review();
+        String answer = "";
 
-     void startProcess(Task task){
-        int index = 0;
-        System.out.println("--------");
-        while (index <= 3){
-            System.out.println("TASK: " +task.task);
-            think(task, review);
-            System.out.println("RESULT: "+result);
-            update(task, review);
-            if(review.approved){
+        for (int round = 1; round <= MAX_ROUNDS; round++) {
+            System.out.println("\n--- Round " + round + " ---");
+
+            answer = researcher.research(task, review);
+            System.out.println("RESEARCHER:\n" + answer);
+
+            reviewer.review(task, review, answer);
+            System.out.println("REVIEW: " + review.score + "/100, approved=" + review.approved);
+            if (!review.approved) {
+                System.out.println("FEEDBACK:\n" + review.feedback);
+            } else {
                 break;
             }
-            System.out.println("--------");
-            index++;
         }
+
+        return answer;
     }
 }

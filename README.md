@@ -1,4 +1,3 @@
-
 <div align="center">
 
 <img src="docs/REXOR.Dark_gray.png" alt="REXOR Logo" width="280">
@@ -8,83 +7,65 @@
 
 </div>
 
+REXOR is a tiny example of two AI agents working together. One writes an answer,
+the other reviews it, and the writer tries again if the review is not good enough.
 
+## How it works
 
-## How It Works
-
-1. **Researcher Agent** — Investigates the user's request and produces an initial result.
-2. **Reviewer Agent** — Evaluates the research, identifies weaknesses, assigns a score, and decides whether to approve or reject it.
-3. **Refinement** — If rejected, the Researcher improves its work based on the reviewer's feedback.
-4. **Final Result** — The system delivers the approved content or handles the configured review-round limit.
-
-## Review Process
-
-- Users can configure the maximum number of review rounds.
-- The Reviewer assigns a score and an approval/rejection decision to each submission.
-- The Researcher uses feedback to improve rejected submissions.
-
-## Core Concept
-
-Rather than relying on a single AI agent, REXOR uses two complementary perspectives to improve the quality of generated content.
-
-**Research → Review → Refine → Result**
-
-## Project Structure
+1. **Researcher** writes an answer to your task.
+2. **Reviewer** replies with three lines: a score, approval, and feedback.
+3. If rejected, the Researcher improves the answer using that feedback.
+4. Stops when approved, or after 3 rounds.
 
 ```text
-REXOR/
-├── README.md
-├── .gitignore
-└── app/
-    └── src/
-        └── Main.java
+Task -> Researcher -> Reviewer -> approved? -> Result
+                          |
+                          +-- no -> feedback -> Researcher again
 ```
-## Architecture Overview
 
-```mermaid
-classDiagram
-    class Main {
-        +main(String[] args)
-    }
+## Files
 
-    class CollaborationManager {
-        -ResearcherAgent researcher
-        -ReviewerAgent reviewer
-        +startProcess(String task, int maxRounds) String
-    }
+| File | Job |
+| --- | --- |
+| `Main.java` | Reads your tasks and prints the result |
+| `CollaborationManager.java` | Runs the research → review → refine loop |
+| `Agent.java` | Shared code for both agents |
+| `ResearcherAgent.java` | Writes and improves the answer |
+| `ReviewerAgent.java` | Scores the answer and gives feedback |
+| `Review.java`, `Task.java` | Simple data holders |
+| `AIService.java` | The only class that talks to the AI |
 
-    class Agent {
-        <<abstract>>
-        #AIService service
-        #String agentDuty
-    }
+## Read the code in this order
 
-    class ResearcherAgent {
-        +research(String task, String feedback) String
-    }
+1. `Main.java` — where the program starts
+2. `CollaborationManager.java` — the whole idea of REXOR in one loop
+3. `ResearcherAgent.java` and `ReviewerAgent.java` — the two agents
+4. `AIService.java` — the one class that makes an HTTP request
 
-    class ReviewerAgent {
-        +review(String task, String content) String
-    }
+No frameworks, no external libraries, no build tool, no environment variables.
 
-    class AIService {
-        -HttpClient client
-        -String apiKey
-        -String model
-        +generateResponse(String prompt) String
-    }
+## Setup
 
-    Main --> CollaborationManager
-    CollaborationManager *-- ResearcherAgent
-    CollaborationManager *-- ReviewerAgent
-    ResearcherAgent --|> Agent
-    ReviewerAgent --|> Agent
-    Agent --> AIService
+REXOR uses OpenRouter's free model, so no payment is needed.
+
+1. Create a key at https://openrouter.ai/keys (starts with `sk-or-v1-`).
+2. Paste it into `api-key.txt` in the project root. This file is gitignored.
+3. Click **Run** in IntelliJ, or use a terminal:
+
+```bash
+javac -d out app/src/*.java
+java -cp out Main
 ```
-## Tech Stack
 
-- Java
+The free tier allows about 50 requests per day, roughly 8 tasks.
 
-## Project Status
+## Using another AI
 
-Currently in development.
+Edit the two constants at the top of `AIService.java`:
+
+```java
+private static final String BASE_URL = "https://api.openai.com/v1";
+private static final String MODEL = "gpt-4o-mini";
+```
+
+Then put an OpenAI key in `api-key.txt` instead.

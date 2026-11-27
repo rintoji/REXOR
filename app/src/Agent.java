@@ -1,9 +1,14 @@
 public abstract class Agent {
-    protected AIService service ;
-    protected final String agentDuty;
+    protected final AIService service;
+    protected final String duty;
 
-    Agent(AIService service, String agentDuty){
+    Agent(AIService service, String duty) {
         this.service = service;
-        this.agentDuty = agentDuty;
+        this.duty = duty;
+    }
+
+    /** Asks the AI with this agent's role as the system prompt. */
+    protected String ask(String prompt) {
+        return service.generate(duty, prompt);
     }
 }

@@ -1,26 +1,27 @@
-import java.awt.*;
 import java.util.Scanner;
 
-class Main{
-    public static void main(String[] args){
-        System.out.println("REXOR is alive !!!");
+class Main {
+    public static void main(String[] args) {
+        System.out.println("REXOR - Research, Review, Refine");
 
-
-//        CollaborationManager.setTask("python");
         Scanner scanner = new Scanner(System.in);
-        String input  = "";
-        Task task ;
-        CollaborationManager manager;
+        CollaborationManager manager = new CollaborationManager();
 
-        while ( !(input.equals("x"))) {
-            System.out.println("give your input ('x' if you want to leave )");
-            input = scanner.nextLine();
-            if (input.equals("x")){
-                System.out.println("done!");
-            }else {
-                task = new Task(input);
-                manager = new CollaborationManager();
-                manager.startProcess(task);
+        while (true) {
+            System.out.print("\nTask (or 'x' to quit): ");
+            if (!scanner.hasNextLine()) break;
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) continue;
+            if (input.equalsIgnoreCase("x")) {
+                System.out.println("Done!");
+                break;
+            }
+
+            try {
+                System.out.println("\nFINAL RESULT:\n" + manager.startProcess(new Task(input)));
+            } catch (RuntimeException e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
     }

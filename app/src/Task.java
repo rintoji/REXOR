@@ -1,7 +1,7 @@
 public class Task {
-    public String task;
+    final String text;
 
-    Task(String task){
-        this.task = task;
+    Task(String text) {
+        this.text = text;
     }
 }
