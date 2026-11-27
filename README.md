@@ -108,15 +108,24 @@ No frameworks, no external libraries, no build tool, no environment variables.
 REXOR uses OpenRouter's free model, so no payment is needed.
 
 1. Create a key at https://openrouter.ai/keys (starts with `sk-or-v1-`).
-2. Paste it into `api-key.txt` in the project root. This file is gitignored.
-3. Click **Run** in IntelliJ, or use a terminal:
+2. Paste it into `api-key.txt` in the project folder. This file is gitignored.
+3. Put `rexor-0.1.0.jar` in that folder and run from there:
+
+```bash
+java -jar rexor-0.1.0.jar
+```
+
+The JAR reads `api-key.txt` from the folder you run it in.
+
+No JAR? Build it from source:
 
 ```bash
 javac -d out app/src/*.java
-java -cp out Main
+jar --create --file rexor-0.1.0.jar --main-class Main -C out .
+java -jar rexor-0.1.0.jar
 ```
 
-The free tier allows about 50 requests per day, roughly 8 tasks.
+Or just click **Run** in IntelliJ. The free tier allows about 50 requests/day, roughly 8 tasks.
 
 ## Using another AI
 
