@@ -116,6 +116,13 @@ javac -d out app/src/*.java
 java -cp out Main
 ```
 
+The releases also include a ready-to-run JAR. Run it from the project folder
+so it can find `api-key.txt`:
+
+```bash
+java -jar rexor-0.1.0.jar
+```
+
 The free tier allows about 50 requests per day, roughly 8 tasks.
 
 ## Using another AI
