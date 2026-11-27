@@ -35,6 +35,49 @@ Task -> Researcher -> Reviewer -> approved? -> Result
 | `Review.java`, `Task.java` | Simple data holders |
 | `AIService.java` | The only class that talks to the AI |
 
+## Architecture Overview
+
+```mermaid
+classDiagram
+    class Main {
+        +main(String[] args)
+    }
+
+    class CollaborationManager {
+        -ResearcherAgent researcher
+        -ReviewerAgent reviewer
+        +startProcess(String task, int maxRounds) String
+    }
+
+    class Agent {
+        <<abstract>>
+        #AIService service
+        #String agentDuty
+    }
+
+    class ResearcherAgent {
+        +research(String task, String feedback) String
+    }
+
+    class ReviewerAgent {
+        +review(String task, String content) String
+    }
+
+    class AIService {
+        -HttpClient client
+        -String apiKey
+        -String model
+        +generateResponse(String prompt) String
+    }
+
+    Main --> CollaborationManager
+    CollaborationManager *-- ResearcherAgent
+    CollaborationManager *-- ReviewerAgent
+    ResearcherAgent --|> Agent
+    ReviewerAgent --|> Agent
+    Agent --> AIService
+```
+
 ## Read the code in this order
 
 1. `Main.java` — where the program starts
